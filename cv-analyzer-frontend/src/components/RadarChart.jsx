@@ -48,6 +48,9 @@ export default function RadarChart({ data }) {
   }
 
   const options = {
+    layout: {
+      padding: 12,
+    },
     scales: {
       r: {
         suggestedMin: 0,
@@ -64,10 +67,11 @@ export default function RadarChart({ data }) {
           color: 'rgba(214, 214, 226, 0.8)',
         },
         pointLabels: {
-          color: '#6b6375',
+          color: '#64748b',
           font: {
-            size: 12,
+            size: 13,
             family: 'Inter, system-ui, Segoe UI, Roboto, sans-serif',
+            weight: '600',
           },
         },
       },
@@ -81,7 +85,7 @@ export default function RadarChart({ data }) {
   }
 
   return (
-    <div className="w-full h-64">
+    <div className="w-full h-full min-h-[300px]">
       <Radar data={chartData} options={options} />
     </div>
   )

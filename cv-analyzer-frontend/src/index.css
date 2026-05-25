@@ -2,72 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
+:root,
+:root[data-theme='light'] {
+  --text: #5f6472;
+  --text-h: #0f172a;
+  --bg: #f5f7fb;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: #ffffff;
+  --border: #d9dee8;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent-border: rgba(170, 59, 255, 0.35);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    rgba(15, 23, 42, 0.08) 0 18px 40px -20px, rgba(15, 23, 42, 0.06) 0 8px 18px -10px;
+  --shadow-strong: rgba(15, 23, 42, 0.12) 0 24px 55px -22px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: Inter, 'Segoe UI', Roboto, sans-serif;
+  --heading: Inter, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font: 18px/1.5 var(--sans);
+  letter-spacing: 0.12px;
+  color-scheme: light;
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top left, rgba(170, 59, 255, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 26%),
+    var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+:root[data-theme='dark'] {
+  --text: #b6bfd0;
+  --text-h: #f8fafc;
+  --bg: #0f172a;
+  --surface: rgba(15, 23, 42, 0.82);
+  --surface-strong: #111827;
+  --border: #283246;
+  --code-bg: #1f2937;
+  --accent: #d8b4fe;
+  --accent-bg: rgba(216, 180, 254, 0.14);
+  --accent-border: rgba(216, 180, 254, 0.34);
+  --social-bg: rgba(30, 41, 59, 0.78);
+  --shadow:
+    rgba(2, 6, 23, 0.45) 0 22px 44px -22px, rgba(2, 6, 23, 0.35) 0 12px 20px -16px;
+  --shadow-strong: rgba(2, 6, 23, 0.52) 0 28px 60px -24px;
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  color-scheme: dark;
+  background:
+    radial-gradient(circle at top left, rgba(170, 59, 255, 0.15), transparent 28%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 26%),
+    var(--bg);
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
 }
 
 h1,
@@ -97,6 +111,75 @@ h2 {
 }
 p {
   margin: 0;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+  }
+}
+
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-card-strong {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-strong);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-card::before,
+.app-card-strong::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 32%);
+  opacity: 0.35;
+}
+
+.app-section-title {
+  color: var(--text-h);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app-muted {
+  color: var(--text);
+}
+
+.app-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.theme-icon {
+  color: var(--text-h);
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
 }
 
 code,
