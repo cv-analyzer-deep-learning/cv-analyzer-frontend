@@ -12,7 +12,7 @@ const cardMotion = {
   }),
 }
 
-export default function Results({ result }) {
+export default function Results({ result, theme = 'light' }) {
   const [displayScore, setDisplayScore] = useState(0)
   const d = result?.data
   const scoreTone = d.compatibility_score >= 75 ? 'text-emerald-500' : d.compatibility_score >= 50 ? 'text-amber-500' : 'text-rose-500'
@@ -61,19 +61,19 @@ export default function Results({ result }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <motion.div
-          variants={cardMotion}
-          custom={0.05}
-          className="app-card-strong rounded-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.92))] p-4 dark:bg-[linear-gradient(180deg,rgba(17,24,39,0.95),rgba(15,23,42,0.82))]"
-        >
-          <div className="rounded-2xl border border-[color:var(--border)]/70 bg-[radial-gradient(circle_at_center,rgba(170,59,255,0.08),transparent_60%)] p-2 shadow-inner">
-            <div className="h-[300px] sm:h-[330px] lg:h-[360px]">
-            <RadarChart data={d.radar_chart_data} />
-            </div>
+      <motion.div
+        variants={cardMotion}
+        custom={0.05}
+        className="app-card-strong overflow-visible rounded-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.92))] p-4 dark:bg-[linear-gradient(180deg,rgba(17,24,39,0.95),rgba(15,23,42,0.82))]"
+      >
+        <div className="rounded-2xl border border-[color:var(--border)]/70 bg-[radial-gradient(circle_at_center,rgba(170,59,255,0.08),transparent_60%)] p-3 shadow-inner sm:p-4">
+            <div className="h-[320px] sm:h-[360px] lg:h-[390px]">
+              <RadarChart data={d.radar_chart_data} theme={theme} />
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
 
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-4">
           <motion.section
             variants={cardMotion}
@@ -116,24 +116,24 @@ export default function Results({ result }) {
               ))}
             </ul>
           </motion.section>
-
-          <motion.section variants={cardMotion} custom={0.24} className="space-y-3">
-            <h4 className="text-lg font-semibold text-[color:var(--text-h)]">Suggestions IA</h4>
-            <div className="space-y-3">
-              {d.actionable_feedback.map((tip, index) => (
-                <article
-                  key={index}
-                  className="group flex gap-3 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(170,59,255,0.12)] dark:bg-[rgba(17,24,39,0.88)]"
-                >
-                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent transition-transform group-hover:scale-105 dark:bg-[rgba(170,59,255,0.16)]">
-                    <FaLightbulb />
-                  </div>
-                  <p className="app-justify text-[15px] leading-7 text-[color:var(--text)]">{tip}</p>
-                </article>
-              ))}
-            </div>
-          </motion.section>
         </div>
+
+        <motion.section variants={cardMotion} custom={0.24} className="space-y-3">
+          <h4 className="text-lg font-semibold text-[color:var(--text-h)]">Suggestions IA</h4>
+          <div className="space-y-3">
+            {d.actionable_feedback.map((tip, index) => (
+              <article
+                key={index}
+                className="group flex gap-3 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(170,59,255,0.12)] dark:bg-[rgba(17,24,39,0.88)]"
+              >
+                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent transition-transform group-hover:scale-105 dark:bg-[rgba(170,59,255,0.16)]">
+                  <FaLightbulb />
+                </div>
+                <p className="app-justify text-[15px] leading-7 text-[color:var(--text)]">{tip}</p>
+              </article>
+            ))}
+          </div>
+        </motion.section>
       </div>
     </motion.section>
   )

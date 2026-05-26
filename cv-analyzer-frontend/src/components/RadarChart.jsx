@@ -11,7 +11,7 @@ import {
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
-export default function RadarChart({ data }) {
+export default function RadarChart({ data, theme = 'light' }) {
   const labels = [
     'Technical skills',
     'Domain knowledge',
@@ -47,9 +47,15 @@ export default function RadarChart({ data }) {
     ],
   }
 
+  const isDark = theme === 'dark'
+  const labelColor = isDark ? '#e2e8f0' : '#334155'
+  const tickColor = isDark ? '#b8c0cf' : '#64748b'
+  const gridColor = isDark ? 'rgba(214, 214, 226, 0.8)' : 'rgba(148, 163, 184, 0.7)'
+
   const options = {
     layout: {
-      padding: 12,
+      // increase padding so outer labels aren't clipped by the container
+      padding: 28,
     },
     scales: {
       r: {
@@ -58,18 +64,19 @@ export default function RadarChart({ data }) {
         ticks: {
           stepSize: 1,
           backdropColor: 'transparent',
-          color: '#8b8b98',
+          color: tickColor,
         },
         grid: {
-          color: 'rgba(214, 214, 226, 0.8)',
+          color: gridColor,
         },
         angleLines: {
-          color: 'rgba(214, 214, 226, 0.8)',
+          color: gridColor,
         },
         pointLabels: {
-          color: '#64748b',
+          color: labelColor,
+          padding: 20,
           font: {
-            size: 13,
+            size: 14,
             family: 'Inter, system-ui, Segoe UI, Roboto, sans-serif',
             weight: '600',
           },
@@ -86,7 +93,7 @@ export default function RadarChart({ data }) {
 
   return (
     <div className="w-full h-full min-h-[300px]">
-      <Radar data={chartData} options={options} />
+      <Radar key={theme} data={chartData} options={options} />
     </div>
   )
 }

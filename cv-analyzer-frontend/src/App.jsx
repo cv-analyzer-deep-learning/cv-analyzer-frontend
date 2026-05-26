@@ -97,7 +97,7 @@ function App() {
               </div>
             )}
 
-            {result && <Results result={result} />}
+            {result && <Results result={result} theme={theme} />}
 
             {!loading && !result && (
               <div className="app-card px-4 py-4 text-[color:var(--text)]">
