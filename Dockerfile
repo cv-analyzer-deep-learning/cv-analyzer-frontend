@@ -10,5 +10,6 @@ RUN npm ci
 COPY . ./
 
 EXPOSE 5173
+ENV VITE_API_PROXY_TARGET=http://host.docker.internal:8080
 ENV PORT=5173
 CMD ["npm", "run", "dev", "--", "--host"]

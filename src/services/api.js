@@ -27,5 +27,8 @@ export const analyzeCV = (file, jobText) => {
   //   }, 3000)
   // })
 
-  return axios.post('/api/v1/analyze', formData).then((response) => response.data)
+  return axios.post('/api/v1/analyze', formData).then((response) => ({
+    status: 'success',
+    data: response.data,
+  }))
 }

@@ -14,7 +14,8 @@ const cardMotion = {
 
 export default function Results({ result, theme = 'light' }) {
   const [displayScore, setDisplayScore] = useState(0)
-  const d = result?.data
+  const d = result?.data ?? result
+  if (!d) return null
   const scoreTone = d.compatibility_score >= 75 ? 'text-emerald-500' : d.compatibility_score >= 50 ? 'text-amber-500' : 'text-rose-500'
   const scoreLabel = d.compatibility_score >= 75 ? 'Excellent matching' : d.compatibility_score >= 50 ? 'Matching moyen' : 'À améliorer'
 
